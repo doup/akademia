@@ -52,12 +52,20 @@
                 width: 50%;
             }
         </style>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
         <div class="sidebar">
-            <input type="text" />
+            <input data-search type="text" />
+            <ul>
+                <li><a href="" data-filter=''>All</a></li>
+                <li><a href="" data-filter='label:favorite'>Favorites</a></li>
+                <li>–</li>
+                <li><a href="" data-filter='label:antropoceno'>Antropoceno</a></li>
+                <li><a href="" data-filter='label:gra'>GRA</a></li>
+            </ul>
         </div>
         <div class="content">
 <div id="editor" class="editor">---
@@ -211,13 +219,27 @@ Thank you for reading this manual. Now please press `Ctrl + M` and click `Link w
             </div>
         </div>
         <script type="text/javascript">
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/twilight");
-            editor.getSession().setMode("ace/mode/markdown");
-            editor.getSession().setUseWrapMode(true);
-            editor.renderer.setShowGutter(false);
-            editor.renderer.setPadding(10);
-            editor.renderer.setPrintMarginColumn(false);
+            $(function () {
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/twilight");
+                editor.getSession().setMode("ace/mode/markdown");
+                editor.getSession().setUseWrapMode(true);
+                editor.renderer.setShowGutter(false);
+                editor.renderer.setPadding(10);
+                editor.renderer.setPrintMarginColumn(false);
+
+                var search = $('[data-search]');
+
+                search.keyup(function (e) {
+                    console.log(e);
+                });
+
+                $('[data-filter]').click(function (e) {
+                    console.log($(this).data('filter'))
+                    search.val($(this).data('filter'));
+                    e.preventDefault();
+                })
+            });
         </script>
     </body>
 </html>

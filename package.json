@@ -1,7 +1,7 @@
 {
   "name": "doup-notedown",
-  "productName": "DoupNotedown",
-  "version": "0.0.0",
+  "productName": "Notedown",
+  "version": "0.1.0",
   "description": "My priceless app",
   "license": "MIT",
   "main": "index.js",
@@ -15,22 +15,10 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "start": "electron .",
-    "build": "electron-packager . $npm_package_productName --out=dist --ignore=dist --prune --asar --all --version=0.30.0"
   },
-  "files": [
-    "index.js",
-    "index.html",
-    "index.css"
-  ],
   "keywords": [
     "electron-app"
   ],
-  "dependencies": {
-    "electron-debug": "^0.1.1"
-  },
-  "devDependencies": {
-    "electron-packager": "^5.0.0",
-    "electron-prebuilt": "^0.30.0"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
