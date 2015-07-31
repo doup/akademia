@@ -3,5 +3,20 @@
   "version": "0.1.0",
   "description": "",
   "main": "main.js",
-  "author": ""
+  "author": "",
+  "dependencies": {
+    "electron-debug": "^0.1.1",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.0",
+    "markdown-it": "^4.4.0",
+    "markdown-it-checkbox": "^1.1.0",
+    "markdown-it-emoji": "^1.0.0",
+    "markdown-it-footnote": "^1.0.0",
+    "markdown-it-highlightjs": "^2.0.0",
+    "markdown-it-sub": "^1.0.0",
+    "markdown-it-sup": "^1.0.0",
+    "markdown-it-toc": "^1.1.0",
+    "markdown-it-video": "^0.2.1",
+    "twemoji": "^1.4.1"
+  }
 }

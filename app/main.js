@@ -9,39 +9,39 @@ require('crash-reporter').start();
 require('electron-debug')();
 
 function createMainWindow () {
-	const win = new BrowserWindow({
-		width: 800,
-		height: 600,
-	});
+    const win = new BrowserWindow({
+        width: 800,
+        height: 600,
+    });
 
-	win.maximize()
-	win.loadUrl(`file://${__dirname}/index.html`);
-	win.on('closed', onClosed);
+    win.maximize()
+    win.loadUrl(`file://${__dirname}/index.html`);
+    win.on('closed', onClosed);
 
-	return win;
+    return win;
 }
 
 function onClosed() {
-	// deref the window
-	// for multiple windows store them in an array
-	mainWindow = null;
+    // deref the window
+    // for multiple windows store them in an array
+    mainWindow = null;
 }
 
 // prevent window being GC'd
 let mainWindow;
 
 app.on('window-all-closed', function () {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
 });
 
 app.on('activate-with-no-open-windows', function () {
-	if (!mainWindow) {
-		mainWindow = createMainWindow();
-	}
+    if (!mainWindow) {
+        mainWindow = createMainWindow();
+    }
 });
 
 app.on('ready', function () {
-	mainWindow = createMainWindow();
+    mainWindow = createMainWindow();
 });

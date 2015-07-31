@@ -2,69 +2,20 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Notedown</title>
-        <link rel="stylesheet" href="index.css">
-        <style type="text/css">
-        /*
-            div {
-                height: 100%;
-                position: absolute;
-                top: 0;
-                bottom: 0;
-            }*/
-
-            .sidebar {
-                height: 100%;
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                background-color: yellow;
-                width: 225px;
-            }
-
-            .sidebar input[type='text'] {
-                width: 209px;
-                height: 25px;
-                margin: 5px;
-            }
-
-            .content {
-                position: absolute;
-                background-color: purple;
-                margin-left: 225px;
-                right: 0;
-                left: 0;
-                bottom: 0;
-                top: 0;
-            }
-
-            .editor {
-                position: absolute;
-                background-color: blue;
-                height: 100%;
-                width: 50%;
-                overflow: scroll;
-            }
-
-            .preview {
-                background-color: red;
-                right: 0;
-                width: 50%;
-            }
-        </style>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+        <title>Akademia</title>
+        <link rel="stylesheet" type="text/css" href="components/normalize.css/normalize.css">
+        <link rel="stylesheet" type="text/css" href="node_modules/markdown-it-highlightjs/node_modules/highlight.js/styles/github.css">
+        <link rel="stylesheet" type="text/css" href="index.css">
     </head>
     <body>
         <div class="sidebar">
             <input data-search type="text" />
             <ul>
                 <li><a href="" data-filter=''>All</a></li>
-                <li><a href="" data-filter='label:favorite'>Favorites</a></li>
+                <li><a href="" data-filter='tag:favorite'>Favorites</a></li>
                 <li>–</li>
-                <li><a href="" data-filter='label:antropoceno'>Antropoceno</a></li>
-                <li><a href="" data-filter='label:gra'>GRA</a></li>
+                <li><a href="" data-filter='tag:antropoceno'>Antropoceno</a></li>
+                <li><a href="" data-filter='tag:gra'>GRA</a></li>
             </ul>
         </div>
         <div class="content">
@@ -72,21 +23,36 @@
 tags: [aupa]
 ---
 
-# Welcome to Marxico
+# Welcome to Akademia :book:
 
-@(Sample notebook)[Marxico|Manual|Markdown]
+## TODO Markdown
 
-**Marxico** is a delicate Markdown editor for Evernote. With reliable storage and a sync powered by Evernote, **Marxico** offers greate writing _experience_. 
+- [ ] Videos
+- [ ] Progress bar (for checkboxes)
+- [ ] Synced scroll
+- [ ] CSS
+- [ ] &lt;http://bramp.github.io/js-sequence-diagrams/&gt;
+- [ ] &lt;http://adrai.github.io/flowchart.js/&gt;
+- [ ] Math
+- [x] Emoji
+- [x] Tables
+- [x] Tipography
+- [x] Code blocks
+- [x] Checkboxes
+- [x] Footnotes
+- [x] Sub/Sup
+- [x] `&lt;http://example.com&gt;` links. HTML encoding problema bat uan.
 
-- **Versatile** - supporting code highlight, *LaTeX* & flow charts,  inserting images & attachments by all means.
-- **Exquisite** -  neat but powerful editor, featuring offline docs, shortcuts, live preview.
-- **Sophisticated** - deeply integrated with Evernote, supporting notebook & tags, two-way bind editing.   
+## TODO App
 
-> Get the offline [Chrome App][1], as good as a native client!
+- [ ] Images
+- [ ] Añadir shortcuts + documentar
+- [ ] Bidirectional checkbox
+- [ ] Preview beian TOC link bat eta Progress mini summary bat jarri (adib: `2/20`)
 
----
+[[toc]]
 
-[TOC]
+[[progress]]
 
 ## Introducing Markdown
 
@@ -94,7 +60,30 @@ tags: [aupa]
 
 As showed in this manual, it uses hash(#) to identify headings, emphasizes some text to be **bold** or *italic*. You can insert a [link](http://www.example.com) , or a footnote[^demo]. Serveral advanced syntax are listed below, please press `Ctrl + /` to view Markdown cheatsheet.
 
+### Typographic replacements
+
+Enable typographer option to see result.
+
+(c) (C) (r) (R) (tm) (TM) (p) (P) +-
+
+test.. test... test..... test?..... test!....
+
+!!!!!! ???? ,,  -- ---
+
+"Smartypants, double quotes" and 'single quotes'
+
+### Subscript &amp; supscript
+
+H~2~0
+
+e = mc^2^
+
 ### Code block
+
+    function test() {
+        return 'javascript';
+    }
+
 ``` python
 @requires_authorization
 def somefunc(param1='', param2=0):
@@ -102,11 +91,17 @@ def somefunc(param1='', param2=0):
     if param1 > param2: # interesting
         print 'Greater'
     return (param2 - param1 + 1) or None
+
 class SomeClass:
     pass
+
 >>> message = '''interpreter
 ... prompt'''
 ```
+
+### Videos
+
+@[youtube](dQw4w9WgXcQ)
 
 ### LaTeX expression
 $$  x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
@@ -118,30 +113,6 @@ $$  x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
 | Phone     |   12 USD |    12    |
 | Pipe      |    1 USD |   234    |
 
-### Diagrams
-#### Flow charts
-```flow
-st=>start: Start
-e=>end
-op=>operation: My Operation
-cond=>condition: Yes or No?
-
-st->op->cond
-cond(yes)->e
-cond(no)->op
-```
-#### Sequence diagrams 
-```sequence
-Alice->Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!
-```
-
-> **Note:** You can find more information:
-
-> - about **Sequence diagrams** syntax [here][2],
-> - about **Flow charts** syntax [here][3].
-
 ### Checkbox
 You can use `- [ ]` and `- [x]` to create checkboxes, for example:
 
@@ -149,97 +120,33 @@ You can use `- [ ]` and `- [x]` to create checkboxes, for example:
 - [ ] Item2
 - [ ] Item3
 
-> **Note:** Currently it is only partially supported. You can't toggle checkboxes in Evernote. You can only modify the Markdown in Marxico to do that. Next version will fix this.  
+> **Note:** Currently it is only partially supported. You can't toggle checkboxes in the preview.
 
+### Emoji :kissing_smiling_eyes:
 
-### Dancing with Evernote
-
-#### Notebook & Tags
-**Marxico** add `@(Notebook)[tag1|tag2|tag3]` syntax to select notebook and set tags for the note. After typing `@(`, the notebook list would appear, please select one from it.  
-
-#### Title
-**Marxico** would adopt the first heading encountered as the note title. For example, in this manual the first line `Welcome to Marxico` is the title.
-
-#### Quick Editing
-Note saved by **Marxico** in Evernote would have a red ribbon button on the top-right corner. Click it and it would bring you back to **Marxico** to edit the note. 
-
-> **Note:** Currently **Marxico** is unable to detect and merge any modifications in Evernote by user. Please go back to **Marxico** to edit.
-
-#### Data Synchronization
-While saving rich HTML content in Evernote, **Marxico** puts the Markdown text in a hidden area of the note, which makes it possible to get the original text in **Marxico** and edit it again. This is a really brilliant design because:
-
-- it is beyond just one-way exporting HTML which other services do;
-- and it avoids privacy and security problems caused by storing content in a intermediate server. 
-
-> **Privacy Statement: All of your notes data are saved in Evernote. Marxico doesn't save any of them.** 
-
-#### Offline Storage
-**Marxico** stores your unsynchronized content locally in browser storage, so no worries about network and broswer crash. It also keeps the recent file list you've edited in `Document Management(Ctrl + O)`.
-
-> **Note:** Although browser storage is reliable in the most time, Evernote is born to do that. So please sync the document regularly while writing.
-
-## Shortcuts
-Help    `Ctrl + /`
-Sync Doc    `Ctrl + S`
-Create Doc    `Ctrl + Alt + N`
-Maximize Editor    `Ctrl + Enter`
-Preview Doc `Ctrl + Alt + Enter`
-Doc Management    `Ctrl + O`
-Menu    `Ctrl + M`
-
-Bold    `Ctrl + B`
-Insert Image    `Ctrl + G`
-Insert Link    `Ctrl + L`
-Convert Heading    `Ctrl + H`
-
-## About Pro
-**Marixo** offers a free trial of 10 days. After that, you need to [purchase](http://marxi.co/purchase.html) the Pro service. Otherwise, you would not be able to sync new notes. Previous notes can be edited and synced all the time.
-
-## Credits
-**Marxico** was first built upon [Dillinger][4], and the newest version is almost based on the awesome [StackEdit][5]. Acknowledgments to them and other incredible open source projects!
+See [emoji cheat-sheet](http://www.emoji-cheat-sheet.com) :scream:
 
 ## Feedback & Bug Report
-- Twitter: [@gock2][6]
+- Twitter: [@aillarra][6]
 - Email: <hustgock@gmail.com>
-
-----------
-Thank you for reading this manual. Now please press `Ctrl + M` and click `Link with Evernote`. Enjoy your **Marxico** journey!
 
 
 [^demo]: This is a demo footnote. Read the [MultiMarkdown Syntax Guide](https://github.com/fletcher/MultiMarkdown/wiki/MultiMarkdown-Syntax-Guide#footnotes) to learn more. Note that Evernote disables ID attributes in its notes , so `footnote` and `TOC` are not actually working. 
 
   [1]: https://chrome.google.com/webstore/detail/kidnkfckhbdkfgbicccmdggmpgogehop
-  [2]: http://bramp.github.io/js-sequence-diagrams/
-  [3]: http://adrai.github.io/flowchart.js/
   [4]: http://dillinger.io
   [5]: http://stackedit.io
-  [6]: https://twitter.com/gock2
+  [6]: https://twitter.com/aillarra
 </div>
-            <div class="preview">
+            <div id="preview" class="preview">
             </div>
         </div>
-        <script type="text/javascript">
-            $(function () {
-                var editor = ace.edit("editor");
-                editor.setTheme("ace/theme/twilight");
-                editor.getSession().setMode("ace/mode/markdown");
-                editor.getSession().setUseWrapMode(true);
-                editor.renderer.setShowGutter(false);
-                editor.renderer.setPadding(10);
-                editor.renderer.setPrintMarginColumn(false);
-
-                var search = $('[data-search]');
-
-                search.keyup(function (e) {
-                    console.log(e);
-                });
-
-                $('[data-filter]').click(function (e) {
-                    console.log($(this).data('filter'))
-                    search.val($(this).data('filter'));
-                    e.preventDefault();
-                })
-            });
-        </script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/theme-solarized_light.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="renderer.js"></script>
+        <!-- build:remove -->
+        <!-- Connect to server process -->
+        <script>require('electron-connect').client.create()</script>
+        <!-- end:build -->
     </body>
 </html>
