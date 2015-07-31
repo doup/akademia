@@ -1,6 +1,6 @@
 var _       = require('lodash');
 var $       = require('jquery');
-var md      = require('markdown-it')({ typographer: true });
+var md      = require('markdown-it')({ html: true, typographer: true, linkify: true });
 var twemoji = require('twemoji');
 
 md.use(require('markdown-it-checkbox'));
@@ -31,16 +31,14 @@ $(function () {
 
     function showPreview() {
         var str = editor.getValue();
-        var frontMatter = /^(-{3}(?:\n|\r)([\w\W]+?)-{3})/;
 
         // TOC sugar
         str = str.replace(/\[\[(toc|TOC)\]\]/, '@[toc](Index)');
-        str = str.replace(frontMatter, '');
 
         $('#preview').html(md.render(str));
     }
 
-    editor.on('change', _.debounce(showPreview, 200))
+    editor.on('change', _.debounce(showPreview, 150))
     showPreview()
 
     var search = $('[data-search]');
@@ -53,5 +51,10 @@ $(function () {
         console.log($(this).data('filter'))
         search.val($(this).data('filter'));
         e.preventDefault();
-    })
+    });
+
+    editor.getSession().on('changeScrollTop', function (scroll) {
+        console.log(scroll)
+        $('#preview').scrollTop(parseInt(scroll) || 0);
+    });
 });

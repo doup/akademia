@@ -10,14 +10,6 @@ html, body {
 /* Disable blue halo */
 input, textarea, select, a { outline: none; }
 
-/*
-div {
-    height: 100%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-}*/
-
 img.emoji {
     font-size: 1.2em;
     height: 1em;
@@ -49,18 +41,26 @@ img.emoji {
     top: 0;
 }
 
-.editor {
+.content .wrapper.left {
     position: absolute;
     height: 100%;
     width: 50%;
     overflow: scroll;
 }
 
-.preview {
+.content .wrapper.left .editor {
+    height: 100%;
+}
+
+.content .wrapper.right {
     position: absolute;
     overflow: scroll;
     right: 0;
     top: 0;
     width: 50%;
     height: 100%;
+}
+
+.preview {
+    padding: 15px;
 }

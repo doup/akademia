@@ -4,10 +4,6 @@
 
 ![](design/screenshoot.png)
 
-- https://stackedit.io
-- http://writeapp.net/mac/
-- https://marxi.co
-
 ## License
 
 The MIT License (MIT)
