@@ -18,6 +18,23 @@ img.emoji {
     vertical-align: -0.1em;
 }
 
+.embed-responsive-item {
+    width: 100%;
+}
+
+table {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+thead {
+    border-bottom: 2px solid #ccc;
+}
+
+table th, table td {
+    padding: 5px;
+}
+
 .sidebar {
     height: 100%;
     position: absolute;
@@ -45,7 +62,7 @@ img.emoji {
     position: absolute;
     height: 100%;
     width: 50%;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .content .wrapper.left .editor {
@@ -54,7 +71,7 @@ img.emoji {
 
 .content .wrapper.right {
     position: absolute;
-    overflow: scroll;
+    overflow: auto;
     right: 0;
     top: 0;
     width: 50%;
@@ -63,4 +80,20 @@ img.emoji {
 
 .preview {
     padding: 15px;
+}
+
+.preview li > input[type='checkbox'] {
+    margin-right: 8px;
+}
+
+h1 { font-size: 32px; }
+h2 { font-size: 26px; }
+h3 { font-size: 22px; }
+h4 { font-size: 16px; }
+h5 { font-size: 14px; }
+h6 { font-size: 12px; }
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.2em;
 }
