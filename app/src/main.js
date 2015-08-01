@@ -1,4 +1,5 @@
 'use strict';
+
 const app = require('app');
 const BrowserWindow = require('browser-window');
 
@@ -15,7 +16,7 @@ function createMainWindow () {
     });
 
     win.maximize()
-    win.loadUrl(`file://${__dirname}/index.html`);
+    win.loadUrl(`file://${__dirname}/../index.html`);
     win.on('closed', onClosed);
 
     return win;
@@ -30,18 +31,34 @@ function onClosed() {
 // prevent window being GC'd
 let mainWindow;
 
-app.on('window-all-closed', function () {
+app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
 });
 
-app.on('activate-with-no-open-windows', function () {
+app.on('activate-with-no-open-windows', () => {
     if (!mainWindow) {
         mainWindow = createMainWindow();
     }
 });
 
-app.on('ready', function () {
+app.on('ready', () => {
+    var protocol = require('protocol');
+
     mainWindow = createMainWindow();
+
+    /*
+    protocol.interceptProtocol('file', request => {
+        var match = request.url.substr(7, 1);
+
+        if (match != '/') {
+            var url = request.url.substr(7);
+            console.log(`${url}`)
+            return new protocol.RequestHttpJob({ url: 'https://' + url });
+        }
+    }, (err, scheme) => {
+        if (!error) console.log(`${scheme} intercepted successfully`)
+    });
+    */
 });

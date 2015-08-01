@@ -12,15 +12,13 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('transpile', function () {
-    return gulp.src(['app/**/*.js', '!app/components/**/*', '!app/node_modules/**/*'])
-        .pipe(babel({
-            comments: false
-        }))
-        .pipe(gulp.dest('build'));
+    return gulp.src(['app/src/**/*.js'])
+        .pipe(babel({ comments: false }))
+        .pipe(gulp.dest('build/src'));
 });
 
 gulp.task('copy', function () {
-    return gulp.src(['app/**/*', '!app/src/**/*.js'])
+    return gulp.src(['app/**/*', '!app/src/**/*'])
         .pipe(gulp.dest('build'));
 });
 
