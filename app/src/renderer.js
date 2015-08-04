@@ -22,12 +22,13 @@ md.renderer.rules.emoji = function(token, idx) {
 
 $(function () {
     var editor = ace.edit('editor');
-    editor.setTheme('ace/theme/solarized_light');
+    editor.setTheme('ace/theme/chrome');
     editor.getSession().setMode('ace/mode/markdown');
     editor.getSession().setUseWrapMode(true);
     editor.renderer.setShowGutter(false);
     editor.renderer.setPadding(15);
     editor.renderer.setPrintMarginColumn(false);
+    editor.setOption('scrollPastEnd', 1.0);
 
     function showPreview() {
         var str = editor.getValue();
@@ -38,8 +39,15 @@ $(function () {
         $('#preview').html(md.render(str));
     }
 
-    editor.on('change', _.debounce(showPreview, 150))
+    editor.on('change', _.debounce(showPreview, 250))
     showPreview()
+
+    /*
+    editor.getSession().on('changeScrollTop', function (scroll) {
+        console.log(scroll)
+        $('#preview').scrollTop(parseInt(scroll) || 0);
+    });
+    */
 
     var search = $('[data-search]');
 
@@ -53,8 +61,48 @@ $(function () {
         e.preventDefault();
     });
 
-    editor.getSession().on('changeScrollTop', function (scroll) {
-        console.log(scroll)
-        $('#preview').scrollTop(parseInt(scroll) || 0);
+    // Allow shortcuts in INPUT, TEXTAREA & SELECT
+    key.filter = function(event){
+        var tagName = (event.target || event.srcElement).tagName;
+        key.setScope(/^(INPUT|TEXTAREA|SELECT)$/.test(tagName) ? 'input' : 'other');
+        return true;
+    }
+
+    // Shortcuts
+    key('ctrl+p, command+p', () => {
+        $('.files').toggle();
+
+        if ($('.files').is(':visible')) {
+            search.focus();
+        } else {
+            editor.focus();
+        }
     });
+
+    key('ctrl+t, command+t', () => {
+        $('.editor, .preview').toggleClass('right left');
+    });
+
+    var fs = require('fs');
+    var glob = require('glob');
+    var filesContainer = $('[data-filelist]');
+
+    function updateFiles(path) {
+        filesContainer.empty();
+
+        glob.sync(`${path}**/*.md`).forEach(function (file, i) {
+            var relative = file.replace(path, '')
+            var parts = relative.split('/');
+
+            filesContainer.append(`<li data-path="${file}">${relative}</li>`);
+        });
+    }
+
+    filesContainer.delegate('[data-path]', 'click', function (e) {
+        editor.setValue('\n' + fs.readFileSync($(e.target).data('path'), 'utf8'), -1);
+        $('#preview').empty()
+        $('.files').toggle();
+    });
+
+    updateFiles('/users/doup/Sparkleshare/Sparkleshare/Akademia/');
 });
