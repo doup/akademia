@@ -15,7 +15,7 @@ md.use(require('markdown-it-video'));
 md.renderer.rules.emoji = function(token, idx) {
     return twemoji.parse(token[idx].content, {
         callback: function (icon, options) {
-            return 'node_modules/twemoji/svg/' + icon + '.svg';
+            return '../node_modules/twemoji/svg/' + icon + '.svg';
         }
     });
 };

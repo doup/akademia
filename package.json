@@ -24,6 +24,8 @@
     "electron-packager": "^5.0.1",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-babel": "^5.2.0",
+    "gulp-jade": "^1.1.0",
+    "gulp-sass": "^2.0.4",
     "gulp-useref": "^1.2.0"
   },
   "devDependencies": {}

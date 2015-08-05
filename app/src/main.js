@@ -16,7 +16,7 @@ function createMainWindow () {
     });
 
     win.maximize()
-    win.loadUrl(`file://${__dirname}/../index.html`);
+    win.loadUrl(`file://${__dirname}/../templates/index.html`);
     win.on('closed', onClosed);
 
     return win;

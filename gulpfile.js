@@ -5,7 +5,9 @@ var del      = require('del');
 var gulp     = require('gulp');
 var packager = require('electron-packager');
 var electron = require('electron-connect').server.create();
+var jade     = require('gulp-jade');
 var useref   = require('gulp-useref');
+var sass     = require('gulp-sass');
 
 gulp.task('clean', function (done) {
     del(['releases', 'build'], done);
@@ -17,38 +19,51 @@ gulp.task('transpile', function () {
         .pipe(gulp.dest('build/src'));
 });
 
+gulp.task('sass', function () {
+    return gulp.src('app/sass/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('build/css'));
+});
+
+gulp.task('templates', function() {
+    return gulp.src('app/templates/**/*.jade')
+        .pipe(jade({ locals: {} }))
+        .pipe(gulp.dest('build/templates'))
+});
+
 gulp.task('copy', function () {
-    return gulp.src(['app/**/*', '!app/src/**/*'])
+    return gulp.src(['app/**/*', '!app/src{,/**/*}', '!app/sass{,/**/*}', '!app/templates{,/**/*}'])
         .pipe(gulp.dest('build'));
 });
 
 gulp.task('clean-ref', function () {
-    return gulp.src('build/**/*.html')
+    return gulp.src('build/teamplates/**/*.html')
         .pipe(useref())
         .pipe(gulp.dest('build'));
 });
 
 gulp.task('package', function (done) {
     packager({
-        dir: 'build',
-        out: 'releases',
-        name: 'Akademia',
-        platform: 'darwin',
-        arch: 'x64',
-        version: '0.28.3',
+        dir:       'build',
+        out:       'releases',
+        name:      'Akademia',
+        platform:  'darwin',
+        arch:      'x64',
+        version:   '0.28.3',
         overwrite: true,
-        icon: 'design/icon.icns'
+        icon:      'design/icon.icns'
     }, done);
 });
 
-gulp.task('build', gulp.series('clean', gulp.parallel('transpile', 'copy')));
+gulp.task('build:generate', gulp.parallel('copy', 'sass', 'templates', 'transpile'))
+gulp.task('build', gulp.series('clean', 'build:generate'));
 
 gulp.task('serve', function () {
     // Start browser process
     electron.start();
 
     // Restart browser process
-    gulp.watch('app/src/main.js', gulp.series(gulp.parallel('transpile', 'copy'), electron.restart));
+    gulp.watch('app/src/main.js', gulp.series('build:generate', electron.restart));
 
     // Reload renderer process
     gulp.watch([
@@ -56,7 +71,7 @@ gulp.task('serve', function () {
         '!app/components/**/*',
         '!app/node_modules/**/*',
         '!app/src/main.js'
-    ], gulp.series(gulp.parallel('transpile', 'copy'), electron.reload));
+    ], gulp.series('build:generate', electron.reload));
 });
 
 gulp.task('default', gulp.series('build', 'serve'));
