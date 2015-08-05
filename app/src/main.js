@@ -19,6 +19,12 @@ function createMainWindow () {
     win.loadUrl(`file://${__dirname}/../templates/index.html`);
     win.on('closed', onClosed);
 
+    // Open links on external navigator
+    win.webContents.on('will-navigate', (e, url) => {
+        require('shell').openExternal(url);
+        e.preventDefault();
+    });
+
     return win;
 }
 
