@@ -4,7 +4,6 @@ var md      = require('markdown-it')({ html: true, typographer: true, linkify: t
 var twemoji = require('twemoji');
 
 md.use(require('markdown-it-checkbox'));
-md.use(require('markdown-it-toc'));
 md.use(require('markdown-it-emoji'));
 md.use(require('markdown-it-highlightjs'));
 md.use(require('markdown-it-sub'));

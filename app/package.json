@@ -17,7 +17,6 @@
     "markdown-it-highlightjs": "^2.0.0",
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
-    "markdown-it-toc": "^1.1.0",
     "markdown-it-video": "^0.2.1",
     "twemoji": "^1.4.1"
   }
