@@ -11,25 +11,37 @@ html
             #editor.
                 # Welcome to Akademia :book:
 
+                - space
+                - space
+                - space
+
                 ## Reference
 
                 - https://stackedit.io
                 - http://writeapp.net/mac/
                 - https://marxi.co
 
+                &lt;h3&gt;Test&lt;/h3&gt;
+
+                - this
+                - is
+                - a
+                - html
+                - heading
+
                 ## TODO Markdown
 
                 - [ ] Videos. `//` tema konpondu.
                 - [ ] Progress bar (for checkboxes)
-                - [ ] Double-synced scroll
                 - [ ] Markdown css style with different font-sizes/colors: http://codemirror.net/demo/variableheight.html
                 - [ ] CSS
                 - [ ] &lt;http://bramp.github.io/js-sequence-diagrams/&gt;
                 - [ ] &lt;http://adrai.github.io/flowchart.js/&gt;
-                - [ ] Math
+                - [ ] MathJax
                 - [ ] Link between documents
                 - [ ] [More plugins?](https://www.npmjs.com/browse/keyword/markdown-it-plugin)
                 - [ ] Hyphenate [based on language](https://www.npmjs.com/package/cld-atom-shell)?
+                - [x] Double-synced scroll
                 - [x] Open external links in browser (not in electron)
                 - [x] Emoji
                 - [x] Tables
@@ -150,6 +162,8 @@ html
                 - Twitter: [@aillarra](https://twitter.com/aillarra)
                 - Email: &lt;asier@illarra.com&gt;
 
+                ### Header rompebolas
+
         .column.right.preview
             #preview
 
@@ -166,7 +180,7 @@ html
                 ul(data-filelist class='file-list')
 
         script(type="text/javascript" src="../components/keymaster/keymaster.js")
-        script(type="text/javascript" src="../node_modules/ace-builds/src/ace.js")
+        script(type="text/javascript" src="../node_modules/ace-builds/src-noconflict/ace.js")
         script(type="text/javascript" src="../src/renderer.js")
 
         // build:remove

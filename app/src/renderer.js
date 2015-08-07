@@ -21,62 +21,108 @@ md.renderer.rules.emoji = function(token, idx) {
 };
 
 $(function () {
+    var margin = 15;
     var editor = ace.edit('editor');
     editor.setTheme('ace/theme/chrome');
     editor.getSession().setMode('ace/mode/markdown');
     editor.getSession().setUseWrapMode(true);
+    editor.setShowPrintMargin(false);
     editor.renderer.setShowGutter(false);
-    editor.renderer.setPadding(15);
+    editor.renderer.setPadding(margin);
     editor.renderer.setPrintMarginColumn(false);
+    editor.renderer.setScrollMargin(margin);
     editor.setOption('scrollPastEnd', 1.0);
+    editor.setOption('animatedScroll', true);
 
-    function getHeaders(tokens) {
-        var content, line;
+    /// SYNC SCROLL ///
+
+    var mdHeadings, htmlHeadings;
+
+    function rowToPixels(row) {
+        var screenRow = editor.getSession().documentToScreenPosition(row, 0).row;
+
+        return (screenRow * editor.renderer.lineHeight) + margin;
+    }
+
+    function getMdHeadings(tokens) {
         var headings = [];
+        var height = getEditorHeight();
+        var line;
+
+        function getOffset(row) {
+            return rowToPixels(row) / height;
+        }
 
         tokens.forEach(function (token) {
+            if (token.type == 'inline' || token.type == 'html_block') {
+                if (/<h[1-6]\s*?>/gi.test(token.content)) {
+                    headings.push(getOffset(token.map[0]));
+                }
+            }
+
             if (token.type == 'inline' && token.map != null) {
-                content = token.content;
                 line = token.map[0];
             } else if (token.type == 'heading_close') {
-                headings.push({ line: line, content: content });
+                headings.push(getOffset(line));
             }
         });
 
-        return headings;
+        return [0.0].concat(headings).concat(1.0);
     }
 
-    function getScrollData(tokens, lines) {
-        var headings = getHeaders(tokens);
+    function getHtmlHeadings() {
+        var headings = [];
         var height = $('#preview')[0].scrollHeight;
-        var el;
+        var offset;
 
-        headings.forEach(function (data) {
-            var content = data.content.split(/[0-9a-z\-\+_]+?/)[0];
-            el = $(`#preview > :header:contains(${content})`);
-            var offset = el.length ? el.offset().top : '';
+        $('#preview > :header').each((i, el) => {
+            headings.push($(el).offset().top / height);
+        });
 
-            console.log(data.line / lines, data.content, offset, height, offset/height);
-        })
+        return [0.0].concat(headings).concat(1.0);
+    }
+
+    function getScrollPos(s, from, to) {
+        var i, idx;
+
+        for (i = 0; i < (from.length - 1); i++) {
+            if (s >= from[i] && s <= from[i + 1]) {
+                idx = i;
+                break;
+            }
+        }
+
+        var pos = (s - from[idx]) / (from[idx + 1] - from[idx]);
+
+        return to[idx] + ((to[idx + 1] - to[idx]) * pos);
     }
 
     function getEditorHeight() {
-        return editor.renderer.layerConfig.maxHeight -
-               editor.renderer.$size.scrollerHeight +
-               editor.renderer.scrollMargin.bottom;
+        var lineCount = editor.getSession().getLength();
+
+        return rowToPixels(lineCount);
     }
 
     editor.getSession().on('changeScrollTop', function (scroll) {
         if ($('.editor').is(':hover')) {
-            var pos = scroll / getEditorHeight();
-            $('.preview').scrollTop(pos * ($('#preview').outerHeight() + 16)); /* TODO: REMOVE HARDCODED MARGIN */
+            var pos = (scroll + margin) / getEditorHeight();
+            pos = (pos > 1) ? 1 : ((pos < 0) ? 0 : pos);
+
+            $('.preview').scrollTop(
+                getScrollPos(pos, mdHeadings, htmlHeadings) *
+                ($('#preview').outerHeight() + margin)
+            );
         }
     });
 
     $('.preview').scroll(function (e) {
         if ($(this).is(':hover')) {
             var pos = ($(this).scrollTop() / ($(this)[0].scrollHeight - $(this).height()));
-            editor.getSession().setScrollTop(pos * getEditorHeight());
+
+            editor.getSession().setScrollTop(
+                getScrollPos(pos, htmlHeadings, mdHeadings) *
+                getEditorHeight() - margin
+            );
         }
     });
 
@@ -89,20 +135,17 @@ $(function () {
     /////////////////
 
     function showPreview() {
-        var str = editor.getValue();
-
-        // TOC sugar
-        str = str.replace(/\[\[(toc|TOC)\]\]/, '@[toc](Index)');
-
         var env = {};
-        var tokens = md.parse(str, env);
+        var tokens = md.parse(editor.getValue(), env);
 
         $('#preview').html(md.renderer.render(tokens, md.options, env));
 
-        getScrollData(tokens, editor.getSession().getLength());
+        // Update scroll data
+        mdHeadings = getMdHeadings(tokens);
+        htmlHeadings = getHtmlHeadings();
     }
 
-    editor.on('change', _.debounce(showPreview, 250))
+    editor.on('change', _.debounce(showPreview, 500))
     showPreview()
 
     var search = $('[data-search]');
@@ -161,7 +204,7 @@ $(function () {
     }
 
     filesContainer.delegate('[data-path]', 'click', function (e) {
-        editor.setValue('\n' + fs.readFileSync($(e.target).data('path'), 'utf8'), -1);
+        editor.setValue(fs.readFileSync($(e.target).data('path'), 'utf8'), -1);
         $('#preview').empty()
         $('.files').toggle();
         $('.preview').toggle();
