@@ -52,29 +52,39 @@ $(function () {
         var el;
 
         headings.forEach(function (data) {
-            el = $(`#preview > :header:contains(${data.content})`);
+            var content = data.content.split(/[0-9a-z\-\+_]+?/)[0];
+            el = $(`#preview > :header:contains(${content})`);
             var offset = el.length ? el.offset().top : '';
 
             console.log(data.line / lines, data.content, offset, height, offset/height);
         })
     }
 
+    function getEditorHeight() {
+        return editor.renderer.layerConfig.maxHeight -
+               editor.renderer.$size.scrollerHeight +
+               editor.renderer.scrollMargin.bottom;
+    }
+
     editor.getSession().on('changeScrollTop', function (scroll) {
         if ($('.editor').is(':hover')) {
-            $('.preview').scrollTop(scroll);
+            var pos = scroll / getEditorHeight();
+            $('.preview').scrollTop(pos * ($('#preview').outerHeight() + 16)); /* TODO: REMOVE HARDCODED MARGIN */
         }
     });
 
     $('.preview').scroll(function (e) {
         if ($(this).is(':hover')) {
-            var frac   = ($(this).scrollTop() / ($(this)[0].scrollHeight - $(this).height()));
-            console.log(frac);
-            var scroll = frac * editor.getSession().getLength() * editor.renderer.lineHeight;
-            editor.getSession().setScrollTop(scroll);
+            var pos = ($(this).scrollTop() / ($(this)[0].scrollHeight - $(this).height()));
+            editor.getSession().setScrollTop(pos * getEditorHeight());
         }
     });
 
-    $('#preview').css('paddingBottom', $(window).outerHeight());
+    $(window).resize(function (e) {
+        $('#preview').css('marginBottom', $(window).outerHeight());
+    });
+
+    $(window).resize();
 
     /////////////////
 
@@ -130,8 +140,8 @@ $(function () {
         $('.editor, .preview').toggleClass('right left');
     });
 
-    $('.preview').hide();
-    $('.files').show();
+    $('.preview').show();
+    $('.files').hide();
 
     ///
 

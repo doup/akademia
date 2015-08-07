@@ -23,6 +23,7 @@ img.emoji {
 }
 
 .column {
+    background-color: #b1cae3;
     position: absolute;
     overflow: auto;
     height: 100%;
@@ -37,16 +38,19 @@ img.emoji {
     }
 }
 
-.editor > div, .preview > div, .files > div {
-    height: 100%;
-}
-
 .editor {
+    div {
+        height: 100%;
+    }
 }
 
 .preview {
     div {
         padding: 15px;
+        margin: 15px;
+        border-radius: 3px;
+        background-color: white;
+        overflow-x: hidden;
     }
 
     h1 { font-size: 32px; }
