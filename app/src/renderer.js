@@ -30,29 +30,75 @@ $(function () {
     editor.renderer.setPrintMarginColumn(false);
     editor.setOption('scrollPastEnd', 1.0);
 
+    function getHeaders(tokens) {
+        var content, line;
+        var headings = [];
+
+        tokens.forEach(function (token) {
+            if (token.type == 'inline' && token.map != null) {
+                content = token.content;
+                line = token.map[0];
+            } else if (token.type == 'heading_close') {
+                headings.push({ line: line, content: content });
+            }
+        });
+
+        return headings;
+    }
+
+    function getScrollData(tokens, lines) {
+        var headings = getHeaders(tokens);
+        var height = $('#preview')[0].scrollHeight;
+        var el;
+
+        headings.forEach(function (data) {
+            el = $(`#preview > :header:contains(${data.content})`);
+            var offset = el.length ? el.offset().top : '';
+
+            console.log(data.line / lines, data.content, offset, height, offset/height);
+        })
+    }
+
+    editor.getSession().on('changeScrollTop', function (scroll) {
+        if ($('.editor').is(':hover')) {
+            $('.preview').scrollTop(scroll);
+        }
+    });
+
+    $('.preview').scroll(function (e) {
+        if ($(this).is(':hover')) {
+            var frac   = ($(this).scrollTop() / ($(this)[0].scrollHeight - $(this).height()));
+            console.log(frac);
+            var scroll = frac * editor.getSession().getLength() * editor.renderer.lineHeight;
+            editor.getSession().setScrollTop(scroll);
+        }
+    });
+
+    $('#preview').css('paddingBottom', $(window).outerHeight());
+
+    /////////////////
+
     function showPreview() {
         var str = editor.getValue();
 
         // TOC sugar
         str = str.replace(/\[\[(toc|TOC)\]\]/, '@[toc](Index)');
 
-        $('#preview').html(md.render(str));
+        var env = {};
+        var tokens = md.parse(str, env);
+
+        $('#preview').html(md.renderer.render(tokens, md.options, env));
+
+        getScrollData(tokens, editor.getSession().getLength());
     }
 
     editor.on('change', _.debounce(showPreview, 250))
     showPreview()
 
-    /*
-    editor.getSession().on('changeScrollTop', function (scroll) {
-        console.log(scroll)
-        $('#preview').scrollTop(parseInt(scroll) || 0);
-    });
-    */
-
     var search = $('[data-search]');
 
     search.keyup(function (e) {
-        console.log(e);
+        //console.log(e);
     });
 
     $('[data-filter]').click(function (e) {
@@ -70,6 +116,7 @@ $(function () {
 
     // Shortcuts
     key('ctrl+p, command+p', () => {
+        $('.preview').toggle();
         $('.files').toggle();
 
         if ($('.files').is(':visible')) {
@@ -82,6 +129,11 @@ $(function () {
     key('ctrl+t, command+t', () => {
         $('.editor, .preview').toggleClass('right left');
     });
+
+    $('.preview').hide();
+    $('.files').show();
+
+    ///
 
     var fs = require('fs');
     var glob = require('glob');
@@ -102,6 +154,7 @@ $(function () {
         editor.setValue('\n' + fs.readFileSync($(e.target).data('path'), 'utf8'), -1);
         $('#preview').empty()
         $('.files').toggle();
+        $('.preview').toggle();
     });
 
     updateFiles('/users/doup/Sparkleshare/Sparkleshare/Akademia/');
