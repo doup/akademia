@@ -190,23 +190,38 @@ $(function () {
     }
 
     // Shortcuts
-    key('ctrl+p, command+p', () => {
-        $('.preview').toggle();
-        $('.files').toggle();
+    // TODO: Clean-up preview visibility mess…
+    var previewEl = $('.preview');
+    var filesEl = $('.files');
 
-        if ($('.files').is(':visible')) {
+    function updateVisibility() {
+        previewEl.toggle(
+            (filesEl.is(':visible') && previewEl.hasClass('left')) ||
+            (!filesEl.is(':visible'))
+        );
+    }
+
+    key('ctrl+p, command+p', () => {
+        filesEl.toggle();
+
+        if (filesEl.is(':visible')) {
             search.focus();
         } else {
             editor.focus();
         }
+
+        updateVisibility();
     });
 
     key('ctrl+t, command+t', () => {
         $('.editor, .preview').toggleClass('right left');
+        updateVisibility();
     });
 
-    $('.preview').show();
-    $('.files').hide();
+    filesEl.hide();
+    previewEl.show();
+
+    updateVisibility();
 
     ///
 
