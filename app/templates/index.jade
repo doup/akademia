@@ -41,6 +41,7 @@ html
                 - [ ] Link between documents
                 - [ ] [More plugins?](https://www.npmjs.com/browse/keyword/markdown-it-plugin)
                 - [ ] Hyphenate [based on language](https://www.npmjs.com/package/cld-atom-shell)?
+                - [x] Emoji hint, popup.
                 - [x] Double-synced scroll
                 - [x] Open external links in browser (not in electron)
                 - [x] Emoji
@@ -156,6 +157,8 @@ html
 
                 See [emoji cheat-sheet](http://www.emoji-cheat-sheet.com) :scream:
 
+                `CTRL+SPACE` for autocomplete.
+
                 ## Feedback &amp; Bug Report
 
                 - [GitHub](https://github.com/doup/akademia)
@@ -181,6 +184,7 @@ html
 
         script(type="text/javascript" src="../components/keymaster/keymaster.js")
         script(type="text/javascript" src="../node_modules/ace-builds/src-noconflict/ace.js")
+        script(type="text/javascript" src="../node_modules/ace-builds/src-noconflict/ext-language_tools.js")
         script(type="text/javascript" src="../src/renderer.js")
 
         // build:remove
