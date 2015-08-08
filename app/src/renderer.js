@@ -22,7 +22,7 @@ md.renderer.rules.emoji = function(token, idx) {
 $(function () {
     var margin = 15;
     var editor = ace.edit('editor');
-    editor.setTheme('ace/theme/chrome');
+    editor.setTheme({ cssClass: 'ace-akademia', cssText: '' });
     editor.getSession().setMode('ace/mode/markdown');
     editor.getSession().setUseWrapMode(true);
     editor.setShowPrintMargin(false);

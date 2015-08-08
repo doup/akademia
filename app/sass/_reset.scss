@@ -1,0 +1,8 @@
+/* Disable rubber band scrolling */
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Disable blue halo */
+input, textarea, select, a { outline: none; }
