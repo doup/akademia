@@ -11,36 +11,17 @@ html
             #editor.
                 # Welcome to Akademia :book:
 
-                - space
-                - space
-                - space
-
                 ## Reference
 
                 - https://stackedit.io
                 - http://writeapp.net/mac/
                 - https://marxi.co
 
-                &lt;h3&gt;Test&lt;/h3&gt;
-
-                - this
-                - is
-                - a
-                - html
-                - heading
-
                 ## TODO Markdown
 
                 - [ ] Videos. `//` tema konpondu.
-                - [ ] Progress bar (for checkboxes)
-                - [ ] Markdown css style with different font-sizes/colors: http://codemirror.net/demo/variableheight.html
-                - [ ] CSS
-                - [ ] &lt;http://bramp.github.io/js-sequence-diagrams/&gt;
-                - [ ] &lt;http://adrai.github.io/flowchart.js/&gt;
-                - [ ] MathJax
-                - [ ] Link between documents
                 - [ ] [More plugins?](https://www.npmjs.com/browse/keyword/markdown-it-plugin)
-                - [ ] Hyphenate [based on language](https://www.npmjs.com/package/cld-atom-shell)?
+                - [ ] On checkbox toggle show warning ("not implemented, change in markdown")
                 - [x] Emoji hint, popup.
                 - [x] Double-synced scroll
                 - [x] Open external links in browser (not in electron)
@@ -55,10 +36,22 @@ html
 
                 ## TODO App
 
+                - [ ] TOC &amp; Progress bar (for checkboxes)
                 - [ ] Images
+                - [ ] CSS, UI, UX, Design.
                 - [ ] Añadir shortcuts + documentar: `cmd+enter` (toggle editor), `cmd+p` (search), `cmd+s` (toggle sidebar)
                 - [ ] Bidirectional checkbox
                 - [ ] Preview beian TOC link bat eta Progress mini summary bat jarri (adib: `2/20`)
+                - [ ] Use URL to know which file was open `#/path/to/file.md`. Usefull for development
+
+                ## TODO Future
+
+                - [ ] MathJax
+                - [ ] &lt;http://bramp.github.io/js-sequence-diagrams/&gt;
+                - [ ] &lt;http://adrai.github.io/flowchart.js/&gt;
+                - [ ] Link between documents
+                - [ ] Markdown css style with different font-sizes/colors: http://codemirror.net/demo/variableheight.html
+                - [ ] Hyphenate [based on language](https://www.npmjs.com/package/cld-atom-shell)?
 
                 ## Introducing Markdown
 
@@ -67,22 +60,6 @@ html
                 As showed in this manual, it uses hash(#) to identify headings, emphasizes some text to be **bold** or *italic*. You can insert a [link](http://www.example.com) , or a footnote[^demo]. Serveral advanced syntax are listed below, please press `Ctrl + /` to view Markdown cheatsheet.
 
                 [^demo]: This is a demo footnote. Read the [MultiMarkdown Syntax Guide](https://github.com/fletcher/MultiMarkdown/wiki/MultiMarkdown-Syntax-Guide#footnotes) to learn more. Note that Evernote disables ID attributes in its notes , so `footnote` and `TOC` are not actually working.
-
-                ## Reference
-
-                This is repeated header to fool the scroll sync algorithm.
-
-                - We
-                - set
-                - a
-                - long
-                - list
-                - to
-                - change
-                - the
-                - overall
-                - height
-                - …
 
                 ### Typographic replacements
 
@@ -131,10 +108,6 @@ html
 
                 @[youtube](MV_3Dpw-BRY)
 
-                ### LaTeX expression
-
-                $$  x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
-
                 ### Table
 
                 | Item      |    Value | Quantity |
@@ -155,18 +128,13 @@ html
 
                 ### Emoji :kissing_smiling_eyes:
 
-                See [emoji cheat-sheet](http://www.emoji-cheat-sheet.com) :scream:
-
-                `CTRL+SPACE` for autocomplete.
+                :see: [emoji cheat-sheet](http://www.emoji-cheat-sheet.com) :document:. Hit `ctrl+space` for autocomplete.
 
                 ## Feedback &amp; Bug Report
 
                 - [GitHub](https://github.com/doup/akademia)
                 - Twitter: [@aillarra](https://twitter.com/aillarra)
                 - Email: &lt;asier@illarra.com&gt;
-
-                ### Header rompebolas
-
         .column.right.preview
             #preview
 
