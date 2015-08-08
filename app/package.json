@@ -2,7 +2,7 @@
   "name": "app",
   "version": "0.1.0",
   "description": "",
-  "main": "main.js",
+  "main": "src/main.js",
   "author": "",
   "dependencies": {
     "ace-builds": "ajaxorg/ace-builds",
