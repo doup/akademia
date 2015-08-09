@@ -14,9 +14,9 @@ var BrowserUI = React.createClass({
     handleFileClick: function (file) {
         /// CHANGE THIS
         editor.setValue(file.file.__content, -1);
-        $('#preview').empty()
+        $('#preview').empty();
+        $('.preview').scrollTop(0);
         $('.files').toggle();
-        $('.preview').toggle();
         ///
     },
     render: function () {
@@ -230,7 +230,7 @@ $(function () {
 
     /// Search events
 
-    var search = $('[data-search]');
+    var search = $('#files input');
 
     search.keyup(function (e) {
         //console.log(e);
@@ -254,8 +254,6 @@ $(function () {
     /// ---
 
     // Shortcuts
-    // TODO: Clean-up preview visibility mess…
-
     // Allow shortcuts in INPUT, TEXTAREA & SELECT
     key.filter = function(event){
         var tagName = (event.target || event.srcElement).tagName;
@@ -266,13 +264,6 @@ $(function () {
     var previewEl = $('.preview');
     var filesEl = $('.files');
 
-    function updateVisibility() {
-        previewEl.toggle(
-            (filesEl.is(':visible') && previewEl.hasClass('left')) ||
-            (!filesEl.is(':visible'))
-        );
-    }
-
     key('ctrl+p, command+p', () => {
         filesEl.toggle();
 
@@ -281,19 +272,14 @@ $(function () {
         } else {
             editor.focus();
         }
-
-        updateVisibility();
     });
 
     key('ctrl+t, command+t', () => {
         $('.editor, .preview').toggleClass('right left');
-        updateVisibility();
     });
 
     filesEl.hide();
     previewEl.show();
-
-    updateVisibility();
 
     ///
 
