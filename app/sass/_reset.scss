@@ -6,3 +6,6 @@ html, body {
 
 /* Disable blue halo */
 input, textarea, select, a { outline: none; }
+
+/* Hide scrollbars */
+.column::-webkit-scrollbar { width: 0 !important }
