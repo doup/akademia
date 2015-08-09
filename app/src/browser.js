@@ -60,29 +60,3 @@ export class Browser extends EventEmitter {
         };
     }
 }
-
-
-//  var fs = require('fs');
-//  var glob = require('glob');
-//  var filesContainer = $('[data-filelist]');
-
-//  function updateFiles(path) {
-//      filesContainer.empty();
-
-//      glob.sync(`${path}**/*.md`).forEach(function (file, i) {
-//          var relative = file.replace(path, '')
-//          var parts = relative.split('/');
-
-//          filesContainer.append(`<li data-path="${file}">${relative}</li>`);
-//      });
-//  }
-
-//  filesContainer.delegate('[data-path]', 'click', function (e) {
-//      editor.setValue(fs.readFileSync($(e.target).data('path'), 'utf8'), -1);
-//      $('#preview').empty()
-//      $('.files').toggle();
-//      $('.preview').toggle();
-//  });
-
-//  updateFiles('/users/doup/Sparkleshare/Sparkleshare/Akademiaa/');
-
