@@ -39,15 +39,19 @@ img.emoji {
     }
 }
 
+@mixin container() {
+    padding: 15px;
+    margin: 15px;
+    border-radius: 3px;
+    background-color: white;
+    border-right: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+}
+
 .preview {
     & > div {
-        padding: 15px;
-        margin: 15px;
-        border-radius: 3px;
-        background-color: white;
+        @include container();
         overflow-x: hidden;
-        border-right: 1px solid #bbb;
-        border-bottom: 1px solid #bbb;
     }
 
     h1 { font-size: 32px; }
@@ -82,10 +86,37 @@ img.emoji {
 
 .files {
     z-index: 999;
-    background-color: #fff;
+
+    & > div {
+        @include container();
+    }
+
+    input {
+        padding: 5px 0;
+        width: 100%;
+        font-size: 18px;
+        border-radius: 3px;
+        border: 1px solid #ccc;;
+    }
 
     div {
         padding: 15px;
+    }
+
+    .tags {
+        padding-left: 0;
+
+        li {
+            display: inline-block;
+            margin: 0 1em 1em 0;
+
+            a {
+                padding: 5px 10px;
+                background-color: #eee;
+                border-radius: 3px;
+                text-decoration: none;
+            }
+        }
     }
 
     .file-list {

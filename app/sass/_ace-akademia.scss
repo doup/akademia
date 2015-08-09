@@ -51,6 +51,7 @@
     .ace_support {
         &.ace_function {
             color: rgb(60, 76, 114);
+            color: #bd4800;
         }
         &.ace_constant {
             color: rgb(6, 150, 14);
@@ -102,6 +103,7 @@
     .ace_heading {
         color: rgb(12, 7, 255);
         color: #0085E5;
+        font-weight: bold;
     }
 
     .ace_list {
@@ -149,6 +151,14 @@
 
     .ace_string {
         color: #1A1AA6;
+
+        &.ace_strong {
+            font-weight: bold;
+        }
+
+        &.ace_emphasis {
+            font-style: italic;
+        }
 
         &.ace_regex {
             color: rgb(255, 0, 0)
