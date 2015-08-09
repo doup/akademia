@@ -189,6 +189,15 @@ $(function () {
         return true;
     }
 
+    /// load welcome.md
+
+    var fs = require('fs');
+    editor.setValue(fs.readFileSync(__dirname +'/../welcome.md', 'utf8'), -1);
+    editor.session.setScrollTop(-margin);
+    editor.focus();
+
+    /// ---
+
     // Shortcuts
     // TODO: Clean-up preview visibility mess…
     var previewEl = $('.preview');
