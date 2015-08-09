@@ -15,17 +15,9 @@ html
 
         .column.right.files
             #files
-                input(data-search type='text')
-                ul
-                    li: a(href='' data-filter='') All
-                    li: a(href='' data-filter='tag:favorite') Favorites
-                    li &mdash;
-                    li: a(href='' data-filter='tag:antropoceno') Antropoceno
-                    li: a(href='' data-filter='tag:gra') GRA
-
-                ul(data-filelist class='file-list')
 
         script(type="text/javascript" src="../components/keymaster/keymaster.js")
+        script(type="text/javascript" src="../node_modules/react/dist/react.js")
         script(type="text/javascript" src="../node_modules/ace-builds/src-noconflict/ace.js")
         script(type="text/javascript" src="../node_modules/ace-builds/src-noconflict/ext-language_tools.js")
         script(type="text/javascript" src="../src/renderer.js")

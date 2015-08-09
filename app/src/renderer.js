@@ -1,14 +1,70 @@
-var _       = require('lodash');
-var $       = require('jquery');
-var md      = require('markdown-it')({ html: true, typographer: true, linkify: true });
-var twemoji = require('twemoji');
+import {Browser} from '../src/browser.js';
+
+var browser = new Browser('/users/doup/Sparkleshare/Sparkleshare/Akademia/');
+var editor;
+
+var BrowserUI = React.createClass({
+    getInitialState: function () {
+        return this.props.browser.getState();
+    },
+    handleFilterKeyUp: function (e) {
+        var filter = React.findDOMNode(this.refs.filter).value;
+        console.log(filter);
+    },
+    handleFileClick: function (file) {
+        /// CHANGE THIS
+        editor.setValue(file.file.__content, -1);
+        $('#preview').empty()
+        $('.files').toggle();
+        $('.preview').toggle();
+        ///
+    },
+    render: function () {
+        var files = _.map(this.state.files, (file, path) => {
+            return (
+                <li data-path={file} onClick={this.handleFileClick.bind(null, file)}>{path}</li>
+            )
+        });
+
+        var tags = _.map(this.state.tags, (tag) => {
+            return (
+                <li><a href='' data-filter='tag:{tag}'>{tag}</a></li>
+            )
+        });
+
+        return (
+            <div>
+                <input ref='filter' type='text' onKeyUp={this.handleFilterKeyUp}/>
+                <ul className='tags'>
+                    <li><a href='' data-filter=''>Clear</a></li>
+                    {tags}
+                </ul>
+                <ul data-filelist className='file-list'>
+                    {files}
+                </ul>
+            </div>
+        );
+    }
+})
+
+React.render(
+    <BrowserUI browser={browser} />,
+    document.getElementById('files')
+);
+
+import _ from 'lodash';
+import $ from 'jquery';
+import MarkdownIt from 'markdown-it';
+import twemoji from 'twemoji';
+
+var md = MarkdownIt({ html: true, typographer: true, linkify: true });
 
 md.use(require('markdown-it-checkbox'));
 md.use(require('markdown-it-emoji'));
+md.use(require('markdown-it-footnote'));
 md.use(require('markdown-it-highlightjs'));
 md.use(require('markdown-it-sub'));
 md.use(require('markdown-it-sup'));
-md.use(require('markdown-it-footnote'));
 md.use(require('markdown-it-video'));
 
 md.renderer.rules.emoji = function(token, idx) {
@@ -21,7 +77,7 @@ md.renderer.rules.emoji = function(token, idx) {
 
 $(function () {
     var margin = 15;
-    var editor = ace.edit('editor');
+    editor = ace.edit('editor');
     editor.setTheme({ cssClass: 'ace-akademia', cssText: '' });
     editor.getSession().setMode('ace/mode/markdown');
     editor.getSession().setUseWrapMode(true);
@@ -170,6 +226,10 @@ $(function () {
     editor.on('change', _.debounce(showPreview, 500))
     showPreview()
 
+    /// -----
+
+    /// Search events
+
     var search = $('[data-search]');
 
     search.keyup(function (e) {
@@ -182,12 +242,7 @@ $(function () {
         e.preventDefault();
     });
 
-    // Allow shortcuts in INPUT, TEXTAREA & SELECT
-    key.filter = function(event){
-        var tagName = (event.target || event.srcElement).tagName;
-        key.setScope(/^(INPUT|TEXTAREA|SELECT)$/.test(tagName) ? 'input' : 'other');
-        return true;
-    }
+    /// ----------
 
     /// load welcome.md
 
@@ -200,6 +255,14 @@ $(function () {
 
     // Shortcuts
     // TODO: Clean-up preview visibility mess…
+
+    // Allow shortcuts in INPUT, TEXTAREA & SELECT
+    key.filter = function(event){
+        var tagName = (event.target || event.srcElement).tagName;
+        key.setScope(/^(INPUT|TEXTAREA|SELECT)$/.test(tagName) ? 'input' : 'other');
+        return true;
+    }
+
     var previewEl = $('.preview');
     var filesEl = $('.files');
 
@@ -234,27 +297,15 @@ $(function () {
 
     ///
 
-    var fs = require('fs');
-    var glob = require('glob');
-    var filesContainer = $('[data-filelist]');
 
-    function updateFiles(path) {
-        filesContainer.empty();
+    //// Bidirectional checkbox
+    /*
+    How to solve this when code is used? e.g: `- [ ]`
 
-        glob.sync(`${path}**/*.md`).forEach(function (file, i) {
-            var relative = file.replace(path, '')
-            var parts = relative.split('/');
-
-            filesContainer.append(`<li data-path="${file}">${relative}</li>`);
-        });
-    }
-
-    filesContainer.delegate('[data-path]', 'click', function (e) {
-        editor.setValue(fs.readFileSync($(e.target).data('path'), 'utf8'), -1);
-        $('#preview').empty()
-        $('.files').toggle();
-        $('.preview').toggle();
+    $('.preview').delegate('input[type=checkbox]', 'change', function (e) {
+        console.log($('.preview input[type=checkbox]').index($(this))); 
+        console.log($(this).is(':checked'));
     });
-
-    updateFiles('/users/doup/Sparkleshare/Sparkleshare/Akademia/');
+    */
+    ////
 });
