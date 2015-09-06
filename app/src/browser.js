@@ -53,10 +53,8 @@ export class Browser extends EventEmitter {
         return this.files;
     }
 
-    getState() {
-        return {
-            files: this.files,
-            tags: ['favorites', 'antropoceno', 'gra'],
-        };
+    getTags() {
+        return ['favorites', 'antropoceno', 'gra'];
     }
+
 }

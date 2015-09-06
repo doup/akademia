@@ -1,10 +1,7 @@
 .ace-akademia {
-    //background-color: #FFFFFF;
-    //color: black;
-
-    .ace_scrollbar {
-        display: none !important;
-    }
+    height: 100%;
+    background-color: $bg-color;
+    color: #f0dfaf;
 
     .ace_gutter {
             background: #ebebeb;
@@ -52,6 +49,7 @@
         &.ace_function {
             color: rgb(60, 76, 114);
             color: #bd4800;
+            color: #dfaf8f;
         }
         &.ace_constant {
             color: rgb(6, 150, 14);
@@ -101,13 +99,14 @@
     }
 
     .ace_heading {
-        color: rgb(12, 7, 255);
-        color: #0085E5;
+        color: #93e0e3;
         font-weight: bold;
+        background-color: rgba(255, 255, 255, 0.15);
     }
 
     .ace_list {
-        color:rgb(185, 6, 144);
+        color: rgb(185, 6, 144);
+        color: #8fb28f;
     }
 
     .ace_marker-layer {
@@ -150,7 +149,7 @@
     }
 
     .ace_string {
-        color: #1A1AA6;
+        color: #5c888b;
 
         &.ace_strong {
             font-weight: bold;
@@ -170,6 +169,7 @@
     }
 
     .ace_indent-guide {
-        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        //background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;
     }
 }

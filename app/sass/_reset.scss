@@ -9,3 +9,9 @@ input, textarea, select, a { outline: none; }
 
 /* Hide scrollbars */
 .column::-webkit-scrollbar { width: 0 !important }
+.ace_scrollbar { display: none !important; }
+
+/* Text selection */
+::selection {
+    background: rgba(255, 255, 255, 0.15);
+}

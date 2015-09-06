@@ -51,6 +51,7 @@
 - [ ] Videos. `//` tema konpondu.
 - [ ] [More plugins?](https://www.npmjs.com/browse/keyword/markdown-it-plugin)
 - [ ] On checkbox toggle show warning ("not implemented, change in markdown")
+- [ ] Tweak theme (`zenburn` beitu)
 - [x] Emoji hint, popup.
 - [x] Double-synced scroll
 - [x] Open external links in browser (not in electron)

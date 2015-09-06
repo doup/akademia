@@ -7,17 +7,22 @@ html
         link(rel="stylesheet" type="text/css" href="../node_modules/markdown-it-highlightjs/node_modules/highlight.js/styles/github.css")
         link(rel="stylesheet" type="text/css" href="../css/app.css")
     body
-        .column.left.editor
-            #editor
+        #app
+        //-
+            .column.left.editor
+                .status
+                #editor.content
 
-        .column.right.preview
-            #preview
+            .column.right.preview
+                .status
+                #preview.content
 
-        .column.right.files
-            #files
+            .column.right.files
+                .status
+                    input
+                #files.content
 
-        script(type="text/javascript" src="../components/keymaster/keymaster.js")
-        script(type="text/javascript" src="../node_modules/react/dist/react.js")
+        //-script(type="text/javascript" src="../node_modules/react/dist/react.js")
         script(type="text/javascript" src="../node_modules/ace-builds/src-noconflict/ace.js")
         script(type="text/javascript" src="../node_modules/ace-builds/src-noconflict/ext-language_tools.js")
         script(type="text/javascript" src="../src/renderer.js")

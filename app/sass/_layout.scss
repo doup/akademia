@@ -1,3 +1,13 @@
+$base-padding: 15px;
+
+$primary-color: #00ffd5;
+$bg-color: #3e4a48;
+
+$panel-border-dark: 1px solid #2c3231; // rgba(0, 0, 0, 0.3);
+$panel-border-light: 1px solid #525b59; // rgba(255, 255, 255, 0.1);
+
+$status-height: 65px;
+
 html, body {
     padding: 0;
     margin: 0;
@@ -12,12 +22,17 @@ img.emoji {
     vertical-align: -0.1em;
 }
 
+.hidden {
+    display: none;
+}
+
 .embed-responsive-item {
     width: 100%;
 }
 
 .column {
-    background-color: #e3edf5;
+    background-color: $bg-color;
+    //background-color: #e3edf5;
     //background-color: #fdf6e3;
     position: absolute;
     overflow: auto;
@@ -25,32 +40,105 @@ img.emoji {
     width: 50%;
 
     &.left {
+        margin-left: -1px;
+border-right: $panel-border-light;
+        .content, .status {
+
+        }
     }
 
     &.right {
+        margin-right: -1px;
         right: 0;
         top: 0;
+border-left: $panel-border-dark;
+
+        .content, .status {
+
+        }
+    }
+
+    .status {
+        box-sizing: border-box;
+        padding: $base-padding;
+        position: fixed;
+        width: 50%;
+        background-color: $bg-color;
+        height: $status-height;
+        top: 0;
+        z-index: 99;
+        border-bottom: $panel-border-dark;
+
+        &:after {
+            left: 0;
+            position: absolute;
+            bottom: -2px;
+            width: 100%;
+            content: '';
+            border-top: $panel-border-light;
+        }
+
+        /*
+        // Drop shadow
+        &:before {
+            $height: 3px;
+
+            left: 0;
+            position: absolute;
+            bottom: - $height - 2px;
+            width: 100%;
+            height: $height;
+            content: '';
+            background: -webkit-linear-gradient($bg-color, rgba($bg-color, 0.0));
+        }*/
     }
 }
 
 .editor {
-    div {
+    .status {
+        input {
+            background-color: transparent;
+            width: 50%;
+            padding: 0;
+            margin: 0;
+            height: $status-height - ($base-padding * 2);
+            border: 0;
+            color: #93e0e3;
+            line-height: $status-height - ($base-padding * 2);
+            font-size: 1.2em;
+            font-weight: 100;
+        }
+
+        .filename {
+
+        }
+
+        .tags {
+            float: right;
+            text-align: right;
+        }
+    }
+    .content {
+        margin-top: $status-height;
         height: 100%;
     }
 }
 
 @mixin container() {
-    padding: 15px;
-    margin: 15px;
+    padding: $base-padding;
+    margin: $base-padding;
     border-radius: 3px;
-    background-color: white;
+    background-color: #e5f2f0;
     border-right: 1px solid #bbb;
     border-bottom: 1px solid #bbb;
 }
 
 .preview {
-    & > div {
+    color: #1a2825;
+
+    .content {
         @include container();
+        margin-top: $status-height + $base-padding;
         overflow-x: hidden;
     }
 
@@ -71,7 +159,7 @@ img.emoji {
     }
 
     table {
-        margin-bottom: 15px;
+        margin-bottom: $base-padding;
         width: 100%;
 
         thead {
@@ -87,20 +175,17 @@ img.emoji {
 .files {
     z-index: 999;
 
-    & > div {
-        @include container();
-    }
-
     input {
         padding: 5px 0;
         width: 100%;
         font-size: 18px;
         border-radius: 3px;
-        border: 1px solid #ccc;;
+        border: 1px solid #ddd;
     }
 
-    div {
-        padding: 15px;
+    .content {
+        padding: $base-padding;
+        margin-top: $status-height;
     }
 
     .tags {
@@ -111,8 +196,9 @@ img.emoji {
             margin: 0 1em 1em 0;
 
             a {
+                cursor: pointer;
                 padding: 5px 10px;
-                background-color: #eee;
+                background-color: #fafafa;
                 border-radius: 3px;
                 text-decoration: none;
             }
@@ -121,12 +207,20 @@ img.emoji {
 
     .file-list {
         padding: 0;
+        margin-bottom: 0;
 
         li {
+            cursor: pointer;
             list-style: none;
-            padding: 5px;
-            border: 1px solid #eee;
-            margin-bottom: 2px;
+            padding: 10px;
+            background-color: #fafafa;
+            border-bottom: 1px solid #ddd;
+            border-top: 1px solid #fff;
+            color: #555;
+
+            &:hover {
+                background-color: #eee;
+            }
         }
     }
 }
